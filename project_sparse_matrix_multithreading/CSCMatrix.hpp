@@ -6,61 +6,64 @@
 #include "Vector.hpp"
 
 class CSCMatrix {
-  public:
-    CSCMatrix(int M, int N) : iRows(M), jCols(N), colIndices(jCols+1, 0) {}
+public:
+    CSCMatrix(int M, int N) : iRows(M), jCols(N), colIndices(jCols + 1, 0) {}
 
-    void openForPushBack() { is_open = true;}
+    void openForPushBack() { is_open = true; }
 
-    void closeForPushBack(){
-      is_open=false;
-      for(int i=0; i<jCols; ++i) colIndices[i+1] += colIndices[i];
-        for(int i=jCols; i>0; --i) colIndices[i] = colIndices[i-1];
-          colIndices[0]=0;
+    void closeForPushBack() {
+        is_open = false;
+        for (int i = 0; i < jCols; ++i) colIndices[i + 1] += colIndices[i];
+        for (int i = jCols; i > 0; --i) colIndices[i] = colIndices[i - 1];
+        colIndices[0] = 0;
     }
 
-    void push_back(int i, int j, double val){
-      ++colIndices[j];
-      rowIndices.push_back(i);
-      arrayData.push_back(val);
+    void push_back(int i, int j, double val) {
+        ++colIndices[j];
+        rowIndices.push_back(i);
+        arrayData.push_back(val);
     }
 
     void clear() {
-      arrayData.clear();
+        arrayData.clear();
     }
+
     void reserve(int n) {
-      arrayData.reserve(n);
+        arrayData.reserve(n);
     }
 
     int numRows() const {
-      return iRows;
+        return iRows;
     }
+
     int numCols() const {
-      return jCols;
+        return jCols;
     }
+
     int numNonzeros() const {
-      return arrayData.size();
+        return arrayData.size();
     }
 
-    void matvec(const Vector& x, Vector& y) const {
-      for(int j=0; j<jCols; ++j)
-        for(int i=rowIndices[j]; i<colIndices[j+1]; ++i)
-          y(j) += arrayData[i] * x(rowIndices[i]);
+    void matvec(const Vector &x, Vector &y) const {
+        for (int j = 0; j < jCols; ++j)
+            for (int i = rowIndices[j]; i < colIndices[j + 1]; ++i)
+                y(j) += arrayData[i] * x(rowIndices[i]);
     }
 
-    void streamMatrix(std::ostream& outputFile) const {
-      outputFile << "AMATH 583 CSCMATRIX" << std::endl;
-      outputFile << iRows << " " << jCols << std::endl;
+    void streamMatrix(std::ostream &outputFile) const {
+        outputFile << "AMATH 583 CSCMATRIX" << std::endl;
+        outputFile << iRows << " " << jCols << std::endl;
 
-      for (int i = 0; i < arrayData.size(); ++i) {
-        outputFile << rowIndices[i] << " ";
-        outputFile << colIndices[i] << " ";
-        outputFile << arrayData[i] << " ";
-        outputFile << std::endl;
-      }
-      outputFile << "THIS IS THE END" << std::endl;
+        for (int i = 0; i < arrayData.size(); ++i) {
+            outputFile << rowIndices[i] << " ";
+            outputFile << colIndices[i] << " ";
+            outputFile << arrayData[i] << " ";
+            outputFile << std::endl;
+        }
+        outputFile << "THIS IS THE END" << std::endl;
     }
 
-  private:
+private:
     int iRows, jCols;
     bool is_open;
     std::vector<int> rowIndices, colIndices;
