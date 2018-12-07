@@ -1,0 +1,21 @@
+Recall the code and your result from Section2.3. The provided code needed to be modiﬁed to obtain a
+meaningful result for the Maximum Performance denominator in computing efﬁciency. Once you have
+successfully obtained a value for your computer, provide the following:
+
+See file sect23questions.cpp for code.
+
+1.Description of what changes you made to the timing code
+Timing the loop without optimizations takes around 8000ms.  Using the -O3 optimization, the timing results in 0ms without making changes to the code.  When I output the answer of the calculation using the -O3 optimization, the timing results in about 3000ms.
+
+2.Explanation of why you made those changes
+I made those changes because I had a feeling that the -O3 optimization does not go through the loop to calculate the answer unless the answer is used to determine the output of the code.
+
+3.Clock rate of your computer
+
+
+4.Max achieved ﬂoating point rate of your timed code
+
+
+5.( AMATH 583 only) Under what circumstances, if any, is your matvec_student faster than matvec_inner
+and matvec_outer?
+matvec_student is faster than both matvec_inner and matvec_outer in cases I've tested with matrices up to 2048x2048 entries.  The method matvec_student uses to become faster is hoisting.

@@ -1,0 +1,10 @@
+Considering the loop-based optimizations we have investigated for matrix-matrix product, discuss (in 200
+words or fewer) which of these optimizations might be appropriate for sparse matrix-vector product.
+
+Since the processing format of the sparse matrix-vector product uses references to entries rather than storing all values like the matrix-matrix product, there can be limitations with using the same optimization techniques on sparse matrix-vector products as we do with matrix-matrix product.  The tiling could be appropriate for sparse matrix-vector products since more lines could be added within the for loop to do multiple calculations in the same loop.  Blocking and Hoisting might not work too well because we are not dealing with multiple nested loops.
+
+
+Discuss also (in 100 words or fewer) which of the vectorization operations might help to improve performance
+(and by how much).
+
+Tiling might help improve performance of the sparse matrix-vector product operation.  If it is at all related to the performance boost for matrix-matrix product, tiling has the potential to increase sparse matrix-vector product performance by a factor of 1.2 on the GFlop scale for matrix dimensions 8x8 through 2048x2048, and perhaps larger dimensions as well.

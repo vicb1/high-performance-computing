@@ -1,0 +1,12 @@
+1.At what size N does your Euclidean norm start to exhibit unexpected results? What is the approximate
+magnitude of the unexpected result? Explain.
+When N is about 75, representing the number of entries in my vector, my Euclidean norm starts to exhibit unexpected results.
+The unexpected result is that the difference between the Euclidean norm of a random vector in ascending order and the Euclidean norm of the same random
+vector in descending order is not exactly zero.  The approximate magnitude of this unexpected difference result from the expected result
+of zero is about 10e-16.
+
+2.Is this going to be a problem with our realization of vector spaces as vector<double>?
+This will not be a problem for most applications because the error is so low.  Even with a vector with 10000 entries still only exhibits
+an error of about 10e-14, which is still a very low error for most applications.
+
+Note: my randomVector function creates a vector with N entries, where each entry is a double between 0 and 1.

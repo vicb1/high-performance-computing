@@ -1,0 +1,24 @@
+1.You measured bandwidth explicitly in the bandwidth program and implicitly with the rooﬂine program.
+How well do the bandwidths from these two proﬁles match? Include the two generated ﬁles
+(one pdf and png... do not rename them unless the extensions are different) with your other materials
+for this assignment.
+
+The general trends between the roofline graph and the bandwidth graphs agree.  The bandwidth graphs show that there is much higher bandwidth when dealing with lower numeric intensity.  Similarly, the roofline graph shows that the closer you get to the processor, for example with the L1 cache, these lower numeric intensity processes can be conducted more quickly.  Additionally, both the roofline graph and the bandwidth graphs show that bandwidth lowers and remains relatively constant once we are conducting higher numeric intensity processes.
+
+
+2.Calculate the numeric intensity of sparse matrix-vector product with compressed sparse row (CSR)
+format, for the two cases of index types being integer (32 bit) and unsigned long (64 bit). Use your
+rooﬂine graph to estimate the performance of CSR sparse matrix vector product on your computer.
+
+In the CSR matrix vector multiply matvec() function outlined in L7A slide 28, there is a total of 7 arithmetic operations per loop, including multiplications, logical operations, and additions.  Assuming that each loop we are writing an integer (32 bit) value, we get (7 flops)/(32 bits)*(8 bits)/(1 byte)= 1.75 flops/byte.  For my computer's roofline graph, this numeric intensity results in a performance of about 12 GFLOPS/sec.  Assuming that each loop we are writing an unsigned long (64 bit) value, we get (7 flops)/(64 bits)*(8 bits)/(1 byte)= 0.875 flops/byte.  For my computer's roofline graph, this numeric intensity results in a performance of about 10 GFLOPS/sec.
+
+
+3. Extra Credit Implement sparse matrix-vector product with CSR format and compare the results you
+obtain experimentally with what was predicted by your rooﬂine model.
+
+
+4. (AMATH 583 only) In lecture 12 the instructor speculated about the reason for only limited speedup
+in the dense matrix-vector product example and hypothesized an explanation. What kind of experiment
+might you conduct to prove (or disprove) that hypothesis?
+
+The hypothesis proposed for a limited speedup in the dense matrix-vector product was that there could be a performance bottleneck where data is fetched/stored from the DRAM memory, resulting in no performance gains when increasing the number of cores a program performs on.  A way to prove the hypothesis besides what the professor has done already and shown to the class (where he showed no performance difference with an increase in cores), is to calculate the numerical intensity of the dense matrix-vector product in terms of flops/byte, then compare the result in the roofline graph for a particular computer.  If the numerical intensity of this function is too high, it's possible that this many flops/byte cannot be performed by the processor caches (that normally work with lower numerical intensity processes) and can only be performed through the DRAM, which would result in the type of DRAM bottleneck hypothesized by the professor.

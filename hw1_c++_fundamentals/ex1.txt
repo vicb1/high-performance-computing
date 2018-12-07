@@ -1,0 +1,14 @@
+1.What is the complete string in your bash shell prompt when your working directory is
+/home/amath583/work?
+The complete string in my prompt when /home/amath583/work is my working directory is the following: "amath583@a784cc4bac10:~$"
+
+2.What is the indicated host name of your amath583/base container? (You will need to ﬁnd the right
+Linux command to execute for this.)
+The host name is "a784cc4bac10"
+
+3.How do you specify the name of an output ﬁle when you use the compiler?
+The following command can be used to specify the name (newName.o in this case) of a output file that can be run in the same way as a.out: "c++ vsum.cpp -o newName.o"
+
+4.(583 only) Describe how you would separately compile the two ﬁles vsum2.cpp and vector.cpp into
+object ﬁles and link them to create an executable.
+The two files would be separately compiled into object files by doing "c++ -c vsum2.cpp -o one.o" and "c++ -c vector.cpp -o two.o".  The object files would then be linked together by doing "c++ one.o two.o -o vectorExecutable"

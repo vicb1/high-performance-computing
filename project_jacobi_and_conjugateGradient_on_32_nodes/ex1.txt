@@ -1,0 +1,41 @@
+1.On the 1x32 cluster: How do you expect the 8 MPI processes to be distributed across the cluster (how
+many processes per node)?
+
+I would assume each processor core runs one MPI process.  With this assumption in place, I would say that the 8 MPI processes are running on the one node available, on 8 separate processor cores.
+
+
+2.On the 1x32 cluster: At what vector length did you start seeing speedup? What were the sequential
+and parallel runtimes for this vector length?
+
+I started seeing speedup as a result of parallelization at a global vector length of 240 and greater.  The average sequential runtime at the global vector length of 240 was 0.00355594 seconds and the average MPI-parallel runtime at this vector length was 0.00348777 seconds.
+
+
+3.On the 32x1 cluster: How do you expect the 8 MPI processes to be distributed across the cluster (how
+many processes per node)?
+
+I would assume each processor core runs one MPI process.  With this assumption in place, I would say that the 8 MPI processes are running on each of their 8 separate nodes, with each node running 1 MPI process on the single available processor cores.
+
+
+4.On the 32x1 cluster: At what vector length did you start seeing speedup? What were the sequential
+and parallel runtimes for this vector length?
+
+I started seeing speedup as a result of parallelization at a global vector length of 32000 and greater.  The average sequential runtime at the global vector length of 32000 was 0.457919 seconds and the average MPI-parallel runtime at this vector length was 0.441795 seconds.
+
+
+5.On the 8x4 cluster: How do you expect the 8 MPI processes to be distributed across the cluster (how
+many processes per node)?
+
+I would assume each processor core runs one MPI process, and that each node allocates MPI processes efficiently between processor cores of the same node as opposed to various processor cores of different nodes.  With these assumptions in place, I would say that the 8 MPI processes are running on only 2 of the nodes, with each node running the 8 MPI processes on all 4 processor cores.
+
+
+6.On the 8x4 cluster: At what vector length did you start seeing speedup? What were the sequential
+and parallel runtimes for this vector length?
+
+I started seeing speedup as a result of parallelization at a global vector length of 2880 and greater.  The average sequential runtime at the global vector length of 2880 was 0.062069 seconds and the average MPI-parallel runtime at this vector length was 0.0555807 seconds.
+
+
+7.Explain the differences, if any, of vector lengths and runtimes between the clusters. Your answer
+should show your knowledge of distributed parallel computing (MPI) given the structure of each
+cluster.
+
+The 1x32 cluster showed to require the smallest vector length to exhibit MPI-parallelization runtime speedup over sequential runtime, followed by the 8x4 cluster, then the 32x1 cluster.  When experimenting with a constant global vector length of 32000 over the three clusters, the 1x32 cluster also showed to have the fastest parallel runtime of 0.052572 seconds, followed the 8x4 cluster's parallel runtime of 0.141742 seconds, then finally the 32x1 cluster's parallel runtime of 0.441795.  It is evident that the processing locality of the 1x32 cluster plays at an advantage, where all data is stored in its fast processor cache.  Meanwhile it is evident that the 8x4 cluster is not quite as fast because of the worse processing locality compared to the 1x32 cluster, where in the 8x4 cluster the data needs to be sent to the separate nodes and the use of memory as opposed to processor cache.  Then finally the 32x1 cluster performed the slowest because of its even worse data locality where each MPI process ran on a separate node, meaning there was no advantage taken in communicating in between the processes using the fast processor cache.  Instead, the processes actually had to communicate using the slower "memory" and through networking to the different nodes.
