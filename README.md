@@ -1,3 +1,3 @@
-# high-performance-computing-examples
+# high-performance-computing
 
 High performance computing coursework.
